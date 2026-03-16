@@ -48,6 +48,8 @@ public class ChatServerWithThreads {
      */
     private static class ConnectionHandler extends Thread {
         Socket client;
+        ObjectOutputStream oos;
+        ObjectInputStream ios;
         ConnectionHandler(Socket socket) {
             client = socket;
         }
