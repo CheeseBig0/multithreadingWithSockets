@@ -31,6 +31,8 @@ public class ChatServerWithThreads {
             System.out.println("Listening on port " + LISTENING_PORT);
             while (true) {
                   // Accept next connection request and handle it.
+                  listener.accept();
+                  
             }
         }
         catch (Exception e) {
@@ -58,6 +60,7 @@ public class ChatServerWithThreads {
             while(true) {
 	            try {
 	            	//your code to send messages goes here.
+                    
 	            }
 	            catch (Exception e){
 	                System.out.println("Error on connection with: " 
