@@ -7,6 +7,12 @@ import java.net.Socket;
 import java.net.UnknownHostException;
 import java.util.Scanner;
 
+import javax.swing.JButton;
+import javax.swing.JFrame;
+import javax.swing.JLabel;
+import java.awt.*;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 
 public class SocketClientExample {
 	
@@ -31,11 +37,21 @@ public class SocketClientExample {
         ObjectInputStream ois = null;
         
         
+        JFrame f=new JFrame("Client");  
+	    JButton exitButton=new JButton("Close");  
+	    //JLabel example = new JLabel(Double.toString(Math.PI));
+	    //f.add(example);
+	    f.add(exitButton);  
+	    f.setSize(300,300);  
+	    f.setLayout(new GridLayout(4, 1));  
+	    f.setVisible(true);
+
 
         //establish socket connection to server and write to socket
         socket = new Socket(host.getHostName(), 9876);
         oos = new ObjectOutputStream(socket.getOutputStream());
         System.out.println("Sending request to Socket Server");
+
 
         Scanner scan = new Scanner(System.in);
         System.out.println("Enter message:");
@@ -45,10 +61,30 @@ public class SocketClientExample {
         ois = new ObjectInputStream(socket.getInputStream());
         String message = (String) ois.readObject();
         System.out.println("Message: " + message);
+        
         //close resources
         ois.close();
         oos.close();
         scan.close();
+        socket.close();
         Thread.sleep(100);
+
+        exitButton.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent arg0) {
+				
+			}
+		});
+
+        
+        
+       
     }
+
+public static class ThreadRunner extends Thread {
+
+public void run() {
+    
+}
+}
+
 }

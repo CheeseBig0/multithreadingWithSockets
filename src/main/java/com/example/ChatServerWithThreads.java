@@ -83,6 +83,11 @@ public class ChatServerWithThreads {
                         break;
                     }
 	            }
+                catch(EOFException e){
+                    System.out.println("the client disconnected, bye!!!");
+                    handlers.remove(this);
+                    break;
+                }
 	            catch (Exception e){
 	                System.out.println("Error on connection with: " 
 	                        + clientAddress + ": " + e);
