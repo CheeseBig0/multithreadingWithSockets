@@ -39,9 +39,11 @@ public class SocketClientExample {
         
         JFrame f=new JFrame("Client");  
 	    JButton exitButton=new JButton("Close");  
+        JButton sendButton=new JButton("Send"); 
 	    //JLabel example = new JLabel(Double.toString(Math.PI));
 	    //f.add(example);
-	    f.add(exitButton);  
+        f.add(sendButton);
+	    f.add(exitButton);
 	    f.setSize(300,300);  
 	    f.setLayout(new GridLayout(4, 1));  
 	    f.setVisible(true);
@@ -68,6 +70,13 @@ public class SocketClientExample {
         scan.close();
         socket.close();
         Thread.sleep(100);
+
+        sendButton.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent arg0) {
+				
+			}
+		});
+
 
         exitButton.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
