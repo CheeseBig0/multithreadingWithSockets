@@ -59,7 +59,7 @@ public class ChatServerWithThreads {
         ConnectionHandler(Socket socket) {
             client = socket;
             if(handlers == null) {
-                handlers = new ArrayList();
+                handlers = new ArrayList<>();
             }
             handlers.add(this);
 

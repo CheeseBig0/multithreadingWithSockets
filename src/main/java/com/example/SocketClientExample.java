@@ -10,6 +10,8 @@ import java.util.Scanner;
 import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
+import javax.swing.JTextArea;
+
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -27,7 +29,7 @@ public class SocketClientExample {
 	 *  ****HINT**** you may wish to have a thread be in charge of sending information 
 	 *  and another thread in charge of receiving information.
 	*/
-
+ 
     //this just sends a message and quits
     public static void main(String[] args) throws UnknownHostException, IOException, ClassNotFoundException, InterruptedException{
         //get the localhost IP address, if server is running on some other IP, you need to use that
@@ -37,18 +39,21 @@ public class SocketClientExample {
         ObjectInputStream ois = null;
         
         
-        JFrame f=new JFrame("Client");  
+        JFrame f=new JFrame("Client");
+        JTextArea messageBox = new JTextArea();
 	    JButton exitButton=new JButton("Close");  
         JButton sendButton=new JButton("Send"); 
+
 	    //JLabel example = new JLabel(Double.toString(Math.PI));
 	    //f.add(example);
+        f.add(messageBox);
         f.add(sendButton);
 	    f.add(exitButton);
 	    f.setSize(300,300);  
 	    f.setLayout(new GridLayout(4, 1));  
 	    f.setVisible(true);
 
-
+        
         //establish socket connection to server and write to socket
         socket = new Socket(host.getHostName(), 9876);
         oos = new ObjectOutputStream(socket.getOutputStream());
@@ -72,8 +77,12 @@ public class SocketClientExample {
         Thread.sleep(100);
 
         sendButton.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent arg0) {
-				
+			public void actionPerformed(ActionEvent e) {
+                if(messageBox.getText().length() > 0) {
+                    messageBox.setText("");
+                    System.out.println("Sent message");
+                }
+                
 			}
 		});
 
