@@ -2,6 +2,7 @@ package com.example;
 import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
+import java.io.OutputStream;
 import java.net.InetAddress;
 import java.net.Socket;
 import java.net.UnknownHostException;
@@ -34,9 +35,9 @@ public class SocketClientExample {
     public static void main(String[] args) throws UnknownHostException, IOException, ClassNotFoundException, InterruptedException{
         //get the localhost IP address, if server is running on some other IP, you need to use that
         InetAddress host = InetAddress.getLocalHost();
-        Socket socket = null;
-        ObjectOutputStream oos = null;
-        ObjectInputStream ois = null;
+        //Socket socket = null;
+        //ObjectOutputStream oos = null;
+        //ObjectInputStream ois = null;
         
         
         JFrame f=new JFrame("Client");
@@ -55,40 +56,51 @@ public class SocketClientExample {
 
         
         //establish socket connection to server and write to socket
-        socket = new Socket(host.getHostName(), 9876);
-        oos = new ObjectOutputStream(socket.getOutputStream());
+        Socket socket = new Socket(host.getHostName(), 9876);
+        ObjectOutputStream oos = new ObjectOutputStream(socket.getOutputStream());
         System.out.println("Sending request to Socket Server");
 
 
-        Scanner scan = new Scanner(System.in);
-        System.out.println("Enter message:");
-        oos.writeObject( scan.nextLine() );
+        //Scanner scan = new Scanner(System.in);
+        //System.out.println("Enter message:");
+        //oos.writeObject( scan.nextLine() );
         
         //read server response
-        ois = new ObjectInputStream(socket.getInputStream());
+        ObjectInputStream ois = new ObjectInputStream(socket.getInputStream());
         String message = (String) ois.readObject();
         System.out.println("Message: " + message);
         
         //close resources
-        ois.close();
-        oos.close();
-        scan.close();
-        socket.close();
-        Thread.sleep(100);
+        //scan.close();
+        
+        //Thread.sleep(100);
 
         sendButton.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-                if(messageBox.getText().length() > 0) {
-                    messageBox.setText("");
-                    System.out.println("Sent message");
+                try {
+                    if(messageBox.getText().length() > 0) {
+                        System.out.println("sent message: " + messageBox.getText());
+                        oos.writeObject( messageBox.getText() );
+                        oos.flush();
+                        messageBox.setText("");
+                    }
+                } catch (Exception error) {
+
                 }
-                
 			}
 		});
 
 
         exitButton.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
+                try {
+                    ois.close();
+                    oos.close();
+                    socket.close();
+                }
+                catch (Exception error) {
+
+                }
 				
 			}
 		});
